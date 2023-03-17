@@ -31,51 +31,78 @@ function startQuiz() {
 
 
 // Function to update the time
-
-  // Decrease the time by 1 and update the time on the screen
-
-
-  // If the time runs out, end the quiz
-
-
-// Function to show a question
-
-  // Get a random question from the questions array
+function updateTime() {
+    // Decrease the time by 1 and update the time on the screen
+    time--;
+    document.getElementById("time").textContent = time;
   
-
-  // Set the question title and choices
-
-// Function to select an answer
-
-  // Disable all the answer buttons to prevent multiple selections
-
-
-  // Check if the answer is correct and update the feedback and score
- 
-
-  // Wait for 1 second and move on to the next question or end the quiz
-
-
-// Function to end the quiz
-
-  // Stop the timer
- 
-
-  // Hide the questions and show the end screen
+    // If the time runs out, end the quiz
+    if (time === 0) {
+      endQuiz();
+    }
+  }
   
-
-  // Set the final score
+  // Function to show a question
+  function showQuestion() {
+    // Get a random question from the questions array
+    const question = questions[currentQuestion];
   
-
-// Get the submit button and add a click event listener
-
-
-// Function to save the score
-
-  // Get the initials and the high scores from localStorage
+    // Set the question title and choices
+    questionTitle.textContent = question.question;
+    choices.innerHTML = "";
+    question.answers.forEach(answer => {
+      const button = document.createElement("button");
+      button.textContent = answer;
+      button.classList.add("answer");
+      if (answer.correct) {
+        button.dataset.correct = true;
+      }
+      button.addEventListener("click", selectAnswer);
+      choices.appendChild(button);
+    });
+  }
   
-
-  // Add the new score to the high scores array and sort it in descending order
- 
+  // Function to select an answer
+  function selectAnswer(event) {
+    // Disable all the answer buttons to prevent multiple selections
+    const answerButtons = document.querySelectorAll(".answer");
+    answerButtons.forEach(button => {
+      button.disabled = true;
+    });
+  
+    // Check if the answer is correct and update the feedback and score
+    const selectedButton = event.target;
+    if (selectedButton.dataset.correct) {
+      feedback.textContent = "Correct!";
+      score++;
+    } else {
+      feedback.textContent = "Wrong!";
+      time -= 10;
+    }
+  
+    // Wait for 1 second and move on to the next question or end the quiz
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion < questions.length && time > 0) {
+        showQuestion();
+      } else {
+        endQuiz();
+      }
+    }, 1000);
+  }
+  
+  // Function to end the quiz
+  function endQuiz() {
+    // Stop the timer
+    clearInterval(timer);
+  
+    // Hide the questions and show the end screen
+    document.getElementById("questions").classList.add("hide");
+    document.getElementById("end-screen").classList.remove("hide");
+  
+    // Set the final score
+    document.getElementById("final-score").textContent = score;
+  }
+  
 
 
