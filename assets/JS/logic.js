@@ -3,7 +3,7 @@ const startButton = document.getElementById("start");
 startButton.addEventListener("click", startQuiz);
 
 // Set the initial time and the interval ID
-let time = 60;
+let time = 120;
 let timer;
 
 // Set the initial question index and the score
@@ -52,7 +52,7 @@ function updateTime() {
     choices.innerHTML = "";
     question.answers.forEach(answer => {
       const button = document.createElement("button");
-      button.textContent = answer;
+      button.textContent = answer.text;
       button.classList.add("answer");
       if (answer.correct) {
         button.dataset.correct = true;
