@@ -16,13 +16,18 @@ const choices = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
 // Function to start the quiz
-
-  // Hide the start screen and show the questions
-
-  // Set the timer and update the time on the screen
- 
-
-  // Show the first question
+function startQuiz() {
+    // Hide the start screen and show the questions
+    document.getElementById("start-screen").classList.add("hide");
+    document.getElementById("questions").classList.remove("hide");
+  
+    // Set the timer and update the time on the screen
+    timer = setInterval(updateTime, 1000);
+    updateTime();
+  
+    // Show the first question
+    showQuestion();
+  }
 
 
 // Function to update the time
