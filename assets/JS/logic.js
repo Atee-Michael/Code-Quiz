@@ -103,6 +103,26 @@ function updateTime() {
     // Set the final score
     document.getElementById("final-score").textContent = score;
   }
-  
+
+
+// Get the submit button and add a click event listener
+const submitButton = document.getElementById("submit");
+submitButton.addEventListener("click", saveScore);
+
+// Function to save the score
+function saveScore() {
+  // Get the initials and the high scores from localStorage
+  const initials = document.getElementById("initials").value.toUpperCase();
+  let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+  // Add the new score to the high scores array and sort it in descending order
+  highScores.push(initials);
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  window.location.href="./highscores.html";
+
+}
+
+
+
 
 
