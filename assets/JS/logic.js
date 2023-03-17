@@ -1,13 +1,19 @@
 // Get the start button and add a click event listener
+const startButton = document.getElementById("start");
+startButton.addEventListener("click", startQuiz);
 
 // Set the initial time and the interval ID
-
+let time = 60;
+let timer;
 
 // Set the initial question index and the score
-
+let currentQuestion = 0;
+let score = 0;
 
 // Get the elements for the questions and the feedback
-
+const questionTitle = document.getElementById("question-title");
+const choices = document.getElementById("choices");
+const feedback = document.getElementById("feedback");
 
 // Function to start the quiz
 
@@ -67,5 +73,4 @@
   // Add the new score to the high scores array and sort it in descending order
  
 
-}
 
