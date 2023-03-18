@@ -3,7 +3,7 @@ const startButton = document.getElementById("start");
 startButton.addEventListener("click", startQuiz);
 
 // Set the initial time and the interval ID
-let time = 60;
+let time = 120;
 let timer;
 
 // Set the initial question index and the score
@@ -52,7 +52,7 @@ function updateTime() {
     choices.innerHTML = "";
     question.answers.forEach(answer => {
       const button = document.createElement("button");
-      button.textContent = answer;
+      button.textContent = answer.text;
       button.classList.add("answer");
       if (answer.correct) {
         button.dataset.correct = true;
@@ -63,7 +63,7 @@ function updateTime() {
   }
   
   // Function to select an answer
-  function selectAnswer(event) {
+function selectAnswer(event) {
     // Disable all the answer buttons to prevent multiple selections
     const answerButtons = document.querySelectorAll(".answer");
     answerButtons.forEach(button => {
@@ -93,36 +93,24 @@ function updateTime() {
   
   // Function to end the quiz
   function endQuiz() {
-    // Stop the timer
+    // Stop the timer and show the end screen
     clearInterval(timer);
-  
-    // Hide the questions and show the end screen
     document.getElementById("questions").classList.add("hide");
     document.getElementById("end-screen").classList.remove("hide");
   
-    // Set the final score
+    // Display the final score and ask for initials
     document.getElementById("final-score").textContent = score;
+    const initialsInput = document.getElementById("initials");
+    initialsInput.value = "";
+    initialsInput.focus();
+  
+    // Add the score and initials to the scores array
+    const scores = JSON.parse(localStorage.getItem("scores")) || [];
+    document.getElementById("submit").addEventListener("click", () => {
+      const initials = initialsInput.value.toUpperCase().substring(0, 3);
+      scores.push({ initials, score });
+      localStorage.setItem("scores", JSON.stringify(scores));
+      window.location.href = "highscores.html";
+    });
   }
-
-
-// Get the submit button and add a click event listener
-const submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", saveScore);
-
-// Function to save the score
-function saveScore() {
-  // Get the initials and the high scores from localStorage
-  const initials = document.getElementById("initials").value.toUpperCase();
-  let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-  // Add the new score to the high scores array and sort it in descending order
-  highScores.push(initials);
-  localStorage.setItem("highScores", JSON.stringify(highScores));
-  window.location.href="./highscores.html";
-
-}
-
-
-
-
-
+  
