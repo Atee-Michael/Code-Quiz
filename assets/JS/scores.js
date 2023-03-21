@@ -13,10 +13,9 @@ scores.forEach((score, index) => {
   highscoresList.appendChild(listItem);
 });
 
-// Add a click event listener to the clear button to clear the scores from local storage and reload the page
+// Add a click event listener to the clear button to clear the scores from local storage and reload the page. 
 clearButton.addEventListener("click", () => {
   localStorage.removeItem("scores");
   location.reload();
 });
-
 
